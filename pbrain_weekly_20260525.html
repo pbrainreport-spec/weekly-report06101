@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P-Brain 週間レポート（2026/05/25〜2026/05/31）</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --border: #2e3347;
+    --accent-p: #4f9cf9; --accent-s: #3ecf8e; --text: #e2e8f0; --muted: #8892a4;
+    --up: #3ecf8e; --down: #f87171; --new: #f59e0b;
+    --header-grad-p: linear-gradient(135deg, #1e3a5f 0%, #1a1d27 100%);
+    --header-grad-s: linear-gradient(135deg, #0f3d2e 0%, #1a1d27 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif; font-size: 14px; line-height: 1.5; padding: 24px 16px 48px; max-width: 1100px; margin: 0 auto; }
+  .page-header { text-align: center; padding: 32px 24px 28px; margin-bottom: 32px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent-p), var(--accent-s)); }
+  .page-header h1 { font-size: 22px; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .page-header .meta { font-size: 13px; color: var(--muted); display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+  .meta-item { display: flex; align-items: center; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-p { background: var(--accent-p); } .dot-s { background: var(--accent-s); }
+  .section { margin-bottom: 40px; }
+  .section-header { padding: 14px 20px; border-radius: 10px 10px 0 0; display: flex; align-items: center; gap: 12px; }
+  .section-header.pachinko { background: var(--header-grad-p); border: 1px solid #2a4a7a; }
+  .section-header.slot { background: var(--header-grad-s); border: 1px solid #1a4a35; }
+  .section-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 3px 10px; border-radius: 20px; }
+  .tag-p { background: rgba(79,156,249,0.2); color: var(--accent-p); border: 1px solid rgba(79,156,249,0.4); }
+  .tag-s { background: rgba(62,207,142,0.2); color: var(--accent-s); border: 1px solid rgba(62,207,142,0.4); }
+  .section-title { font-size: 17px; font-weight: 700; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-top: none; }
+  .kpi-card { background: var(--surface); padding: 14px 12px; text-align: center; }
+  .kpi-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+  .kpi-value { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+  .kpi-value.color-p { color: var(--accent-p); } .kpi-value.color-s { color: var(--accent-s); }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 860px; }
+  thead th { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; padding: 8px 10px; white-space: nowrap; border-bottom: 1px solid var(--border); text-align: right; }
+  thead th:nth-child(1), thead th:nth-child(2) { text-align: center; }
+  thead th:nth-child(3) { text-align: left; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--surface2); }
+  tbody tr:nth-child(1) { background: rgba(255,215,0,0.04); }
+  tbody tr:nth-child(2) { background: rgba(192,192,192,0.03); }
+  tbody tr:nth-child(3) { background: rgba(176,120,60,0.03); }
+  td { padding: 8px 10px; text-align: right; color: var(--text); }
+  td:nth-child(1) { text-align: center; width: 44px; }
+  td:nth-child(2) { text-align: center; width: 28px; }
+  td:nth-child(3) { text-align: left; font-size: 12px; min-width: 200px; max-width: 260px; }
+  td:nth-child(4) { color: var(--muted); font-size: 11px; text-align: center; }
+  td:nth-child(5) { color: var(--muted); font-size: 11px; text-align: center; }
+  .rank { font-size: 13px; font-weight: 700; color: var(--muted); }
+  .rank-1 { color: #ffd700; } .rank-2 { color: #c0c0c0; } .rank-3 { color: #cd853f; }
+  .change { font-size: 13px; font-weight: 700; }
+  .change-up { color: var(--up); } .change-down { color: var(--down); }
+  .change-new { color: var(--new); font-size: 10px; font-weight: 800; }
+  .change-same { color: var(--muted); }
+  .machine-name { font-size: 12px; line-height: 1.4; }
+  .machine-type { font-size: 10px; color: var(--muted); margin-top: 1px; }
+  .num { font-variant-numeric: tabular-nums; }
+  .profit-positive { color: var(--up); } .profit-negative { color: var(--down); }
+  .legend { margin-top: 10px; padding: 10px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-size: 11px; color: var(--muted); display: flex; gap: 20px; flex-wrap: wrap; }
+  .legend span { display: flex; align-items: center; gap: 5px; }
+  .leg-new { color: var(--new); font-weight: 800; font-size: 10px; }
+  .leg-up { color: var(--up); font-weight: 700; }
+  .leg-down { color: var(--down); font-weight: 700; }
+  .leg-same { color: var(--muted); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="page-header">
+  <h1>📊 P-Brain 週間レポート</h1>
+  <div class="meta">
+    <div class="meta-item"><span class="dot dot-p"></span>期間：2026/05/25〜2026/05/31</div>
+    <div class="meta-item"><span class="dot dot-s"></span>対象：4円パチンコ / 20円スロット</div>
+    <div class="meta-item">順位変動：先々週比（NEW / ▲ / ▼ / →）</div>
+  </div>
+</div>
+
+<!-- 4円パチンコ -->
+<div class="section">
+  <div class="section-header pachinko">
+    <span class="section-tag tag-p">PACHINKO</span>
+    <span class="section-title">4円パチンコ 全体平均</span>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">打込</div><div class="kpi-value color-p">10,588</div></div>
+    <div class="kpi-card"><div class="kpi-label">玉粗利</div><div class="kpi-value color-p">0.340</div></div>
+    <div class="kpi-card"><div class="kpi-label">台粗利</div><div class="kpi-value color-p">3,597</div></div>
+    <div class="kpi-card"><div class="kpi-label">台売上</div><div class="kpi-value color-p">22,202</div></div>
+    <div class="kpi-card"><div class="kpi-label">玉単価</div><div class="kpi-value color-p">2.097</div></div>
+    <div class="kpi-card"><div class="kpi-label">利益率</div><div class="kpi-value color-p">16.20%</div></div>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr>
+      <th>順位</th><th>変動</th><th>機種</th><th>発売日</th><th>経過週</th>
+      <th>打込</th><th>玉粗利</th><th>台粗利</th><th>台売上</th><th>玉単価</th>
+      <th>打込シェア</th><th>台粗利シェア</th><th>台売上シェア</th><th>台数シェア</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><span class="rank rank-1">1</span></td><td><span class="change change-up">▲</span></td><td><div class="machine-name">eリコリス・リコイルM3</div><div class="machine-type">スマパチ</div></td><td>2026/04/05</td><td>8</td><td class="num">25,658</td><td class="num">0.300</td><td class="num profit-positive">7,699</td><td class="num">60,002</td><td class="num">2.339</td><td class="num">4.77%</td><td class="num">5.32%</td><td class="num">4.21%</td><td class="num">1.97%</td></tr>
+      <tr><td><span class="rank rank-2">2</span></td><td><span class="change change-down">▼</span></td><td><div class="machine-name">eひきこまり吸血姫の悶々FHV</div><div class="machine-type">スマパチ</div></td><td>2026/05/10</td><td>3</td><td class="num">25,645</td><td class="num">0.429</td><td class="num profit-positive">10,994</td><td class="num">58,864</td><td class="num">2.295</td><td class="num">1.66%</td><td class="num">1.82%</td><td class="num">2.09%</td><td class="num">0.69%</td></tr>
+      <tr><td><span class="rank rank-3">3</span></td><td><span class="change change-new">NEW</span></td><td><div class="machine-name">P犬夜叉FH-NF</div><div class="machine-type">ライト</div></td><td>2026/05/24</td><td>1</td><td class="num">24,708</td><td class="num">0.500</td><td class="num profit-positive">12,350</td><td class="num">49,733</td><td class="num">2.013</td><td class="num">0.33%</td><td class="num">0.32%</td><td class="num">0.48%</td><td class="num">0.14%</td></tr>
+      <tr><td><span class="rank">4</span></td><td><span class="change change-down">▼</span></td><td><div class="machine-name">eカケグルイTT-NV</div><div class="machine-type">スマパチ</div></td><td>2026/05/10</td><td>3</td><td class="num">21,223</td><td class="num">0.486</td><td class="num profit-positive">10,311</td><td class="num">52,572</td><td class="num">2.477</td><td class="num">0.07%</td><td class="num">0.08%</td><td class="num">0.10%</td><td class="num">0.04%</td></tr>
+      <tr><td><span class="rank">5</span></td><td><span class="change change-down">▼</span></td><td><div class="machine-name">eカケグルイ〜生か死か〜LTT-KR</div><div class="machine-type">スマパチ</div></td><td>2026/05/10</td><td>3</td><td class="num">19,907</td><td class="num">0.438</td><td class="num profit-positive">8,717</td><td class="num">51,177</td><td class="num">2.571</td><td class="num">2.35%</td><td class="num">2.88%</td><td class="num">3.03%</td><td class="num">1.25%</td></tr>
+      <tr><td><span class="rank">6</span></td><td><span class="change change-same">→</span></td><td><div class="machine-name">P大海物語5スペシャルALTA</div><div class="machine-type">ミドル海</div></td><td>2024/11/04</td><td>81</td><td class="num">19,872</td><td class="num">0.116</td><td class="num profit-positive">2,302</td><td class="num">30,690</td><td class="num">1.544</td><td class="num">6.18%</td><td class="num">4.55%</td><td class="num">2.11%</td><td class="num">3.30%</td></tr>
+      <tr><td><span class="rank">7</span></td><td><span class="change change-down">▼</span></td><td><div class="machine-name">eバイオハザード6APN</div><div class="machine-type">スマパチ</div></td><td>2026/05/10</td><td>3</td><td class="num">18,373</td><td class="num">0.515</td><td class="num profit-positive">9,455</td><td class="num">45,934</td><td class="num">2.500</td><td class="num">2.30%</td><td class="num">2.75%</td><td class="num">3.49%</td><td class="num">1.33%</td></tr>
+      <tr><td><span class="rank">8</span></td><td><span class="change change-down">▼</span></td><td><div class="machine-name">e東京喰種W</div><div class="machine-type">スマパチ</div></td><td>2025/04/20</td><td>58</td><td class="num">18,322</td><td class="num">0.270</td><td class="num profit-positive">4,943</td><td class="num">42,021</td><td class="num">2.294</td><td class="num">9.58%</td><td class="num">10.48%</td><td class="num">7.61%</td><td class="num">5.54%</td></tr>
+      <tr><td><span class="rank">9</span></td><td><span class="change change-up">▲</span></td><td><div class="machine-name">e牙狼12XX-MJ</div><div class="machine-type">スマパチ</div></td><td>2025/08/03</td><td>43</td><td class="num">16,860</td><td class="num">0.273</td><td class="num profit-positive">4,598</td><td class="num">39,902</td><td class="num">2.367</td><td class="num">5.36%</td><td class="num">6.05%</td><td class="num">4.31%</td><td class="num">3.37%</td></tr>
+      <tr><td><span class="rank">10</span></td><td><span class="change change-down">▼</span></td><td><div class="machine-name">eフィーバーキン肉マン</div><div class="machine-type">スマパチ</div></td><td>2026/04/19</td><td>6</td><td class="num">15,855</td><td class="num">0.441</td><td class="num profit-positive">6,984</td><td class="num">38,345</td><td class="num">2.418</td><td class="num">3.44%</td><td class="num">3.96%</td><td class="num">4.46%</td><td class="num">2.30%</td></tr>
+      <tr><td><span class="rank">11</span></td><td><span class="change change-up">▲</span></td><td><div class="machine-name">e大海物語5スペシャルELTA4</div><div class="machine-type">スマパチ</div></td><td>2024/11/04</td><td>81</td><td class="num">15,801</td><td class="num">0.109</td><td class="num profit-positive">1,726</td><td class="num">26,124</td><td class="num">1.653</td><td class="num">0.22%</td><td class="num">0.17%</td><td class="num">0.07%</td><td class="num">0.14%</td></tr>
+      <tr><td><span class="rank">12</span></td><td><span class="change change-down">▼</span></td><td><div class="machine-name">P大海物語5MTE2</div><div class="machine-type">ミドル海</div></td><td>2023/02/05</td><td>173</td><td class="num">15,733</td><td class="num">0.118</td><td class="num profit-positive">1,856</td><td class="num">25,202</td><td class="num">1.602</td><td class="num">4.26%</td><td class="num">3.25%</td><td class="num">1.48%</td><td class="num">2.87%</td></tr>
+      <tr><td><span class="rank">13</span></td><td><span class="change change-up">▲</span></td><td><div class="machine-name">eエイティシックスMAM2</div><div class="machine-type">スマパチ</div></td><td>2026/04/19</td><td>6</td><td class="num">15,271</td><td class="num">0.447</td><td class="num profit-positive">6,821</td><td class="num">37,661</td><td class="num">2.466</td><td class="num">0.48%</td><td class="num">0.56%</td><td class="num">0.63%</td><td class="num">0.33%</td></tr>
+      <tr><td><span class="rank">14</span></td><td><span class="change change-same">→</span></td><td><div class="machine-name">Pポチッと一発おだてブタ2V1</div><div class="machine-type">羽根・特殊</div></td><td>2024/01/08</td><td>124</td><td class="num">14,922</td><td class="num">0.114</td><td class="num profit-positive">1,698</td><td class="num">9,426</td><td class="num">0.632</td><td class="num">0.59%</td><td class="num">0.18%</td><td class="num">0.20%</td><td class="num">0.42%</td></tr>
+      <tr><td><span class="rank">15</span></td><td><span class="change change-down">▼</span></td><td><div class="machine-name">PAフィーバークィーンIIYS</div><div class="machine-type">甘デジ</div></td><td>2026/05/10</td><td>3</td><td class="num">14,642</td><td class="num">0.215</td><td class="num profit-positive">3,145</td><td class="num">17,871</td><td class="num">1.220</td><td class="num">0.69%</td><td class="num">0.40%</td><td class="num">0.43%</td><td class="num">0.50%</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- 20円スロット -->
+<div class="section">
+  <div class="section-header slot">
+    <span class="section-tag tag-s">SLOT</span>
+    <span class="section-title">20円スロット 全体平均</span>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">打込</div><div class="kpi-value color-s">9,082</div></div>
+    <div class="kpi-card"><div class="kpi-label">玉粗利</div><div class="kpi-value color-s">0.354</div></div>
+    <div class="kpi-card"><div class="kpi-label">台粗利</div><div class="kpi-value color-s">3,217</div></div>
+    <div class="kpi-card"><div class="kpi-label">台売上</div><div class="kpi-value color-s">26,786</div></div>
+    <div class="kpi-card"><div class="kpi-label">玉単価</div><div class="kpi-value color-s">2.949</div></div>
+    <div class="kpi-card"><div class="kpi-label">利益率</div><div class="kpi-value color-s">12.01%</div></div>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr>
+      <th>順位</th><th>変動</th><th>機種</th><th>発売日</th><th>経過週</th>
+      <th>打込</th><th>玉粗利</th><th>台粗利</th><th>台売上</th><th>玉単価</th>
+      <th>打込シェア</th><th>台粗利シェア</th><th>台売上シェア</th><th>台数シェア</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><span class="rank rank-1">1</span></td><td><span class="change change-same">→</span></td><td><div class="machine-name">L/ミリオンゴッド/CX</div><div class="machine-type">スマスロ ART/AT</div></td><td>2026/04/19</td><td>6</td><td class="num">15,337</td><td class="num">0.909</td><td class="num profit-positive">13,945</td><td class="num">64,545</td><td class="num">4.208</td><td class="num">4.85%</td><td class="num">6.92%</td><td class="num">12.45%</td><td class="num">2.87%</td></tr>
+      <tr><td><span class="rank rank-2">2</span></td><td><span class="change change-same">→</span></td><td><div class="machine-name">LBスロットガルフィーA4</div><div class="machine-type">スマスロ Aタイプ</div></td><td>2026/05/24</td><td>1</td><td class="num">14,627</td><td class="num">0.254</td><td class="num profit-positive">3,721</td><td class="num">32,646</td><td class="num">2.232</td><td class="num">0.06%</td><td class="num">0.05%</td><td class="num">0.04%</td><td class="num">0.04%</td></tr>
+      <tr><td><span class="rank rank-3">3</span></td><td><span class="change change-up">▲</span></td><td><div class="machine-name">L甲鉄城のカバネリ 海門決戦 XX</div><div class="machine-type">スマスロ ART/AT</div></td><td>2026/03/01</td><td>13</td><td class="num">14,378</td><td class="num">0.223</td><td class="num profit-positive">3,211</td><td class="num">44,870</td><td class="num">3.121</td><td class="num">5.78%</td><td class="num">6.12%</td><td class="num">3.65%</td><td class="num">3.65%</td></tr>
+      <tr><td><span class="rank">4</span></td><td><span class="change change-down">▼</span></td><td><div class="machine-name">Lタクトオーバスム1</div><div class="machine-type">スマスロ ART/AT</div></td><td>2026/05/10</td><td>3</td><td class="num">14,373</td><td class="num">0.668</td><td class="num profit-positive">9,602</td><td class="num">44,582</td><td class="num">3.102</td><td class="num">0.65%</td><td class="num">0.68%</td><td class="num">1.23%</td><td class="num">0.41%</td></tr>
+      <tr><td><span class="rank">5</span></td><td><span class="change change-up">▲</span></td><td><div class="machine-name">L/真打吉宗/A1</div><div class="machine-type">スマスロ ART/AT</div></td><td>2026/04/05</td><td>8</td><td class="num">14,060</td><td class="num">0.696</td><td class="num profit-positive">9,783</td><td class="num">59,012</td><td class="num">4.197</td><td class="num">1.81%</td><td class="num">2.58%</td><td class="num">3.56%</td><td class="num">1.17%</td></tr>
+      <tr><td><span class="rank">6</span></td><td><span class="change change-down">▼</span></td><td><div class="machine-name">Lパチスロスーパーリオエース2ND02H</div><div class="machine-type">スマスロ ART/AT</div></td><td>2026/05/10</td><td>3</td><td class="num">14,044</td><td class="num">0.671</td><td class="num profit-positive">9,423</td><td class="num">50,621</td><td class="num">3.604</td><td class="num">1.73%</td><td class="num">2.11%</td><td class="num">3.27%</td><td class="num">1.12%</td></tr>
+      <tr><td><span class="rank">7</span></td><td><span class="change change-up">▲</span></td><td><div class="machine-name">Lうみねこのなく頃に2A1</div><div class="machine-type">スマスロ ART/AT</div></td><td>2026/02/01</td><td>17</td><td class="num">13,492</td><td class="num profit-negative">−0.019</td><td class="num profit-negative">−259</td><td class="num">22,399</td><td class="num">1.660</td><td class="num">0.30%</td><td class="num">0.17%</td><td class="num">−0.02%</td><td class="num">0.20%</td></tr>
+      <tr><td><span class="rank">8</span></td><td><span class="change change-up">▲</span></td><td><div class="machine-name">SBニューキングハナハナVPA-30</div><div class="machine-type">30φ Aタイプ</div></td><td>2026/01/04</td><td>21</td><td class="num">12,784</td><td class="num">0.103</td><td class="num profit-positive">1,313</td><td class="num">22,794</td><td class="num">1.783</td><td class="num">1.60%</td><td class="num">0.97%</td><td class="num">0.46%</td><td class="num">1.14%</td></tr>
+      <tr><td><span class="rank">9</span></td><td><span class="change change-same">→</span></td><td><div class="machine-name">SマイジャグラーV KD</div><div class="machine-type">ジャグラー</div></td><td>2021/12/05</td><td>234</td><td class="num">12,552</td><td class="num">0.171</td><td class="num profit-positive">2,143</td><td class="num">22,021</td><td class="num">1.754</td><td class="num">11.26%</td><td class="num">6.70%</td><td class="num">5.43%</td><td class="num">8.15%</td></tr>
+      <tr><td><span class="rank">10</span></td><td><span class="change change-down">▼</span></td><td><div class="machine-name">Lビッグドリーム KR</div><div class="machine-type">スマスロ ART/AT</div></td><td>2026/05/10</td><td>3</td><td class="num">12,224</td><td class="num">1.135</td><td class="num profit-positive">13,878</td><td class="num">68,266</td><td class="num">5.585</td><td class="num">1.37%</td><td class="num">2.60%</td><td class="num">4.39%</td><td class="num">1.02%</td></tr>
+      <tr><td><span class="rank">11</span></td><td><span class="change change-down">▼</span></td><td><div class="machine-name">Lバイオハザード RE:3 ZD</div><div class="machine-type">スマスロ ART/AT</div></td><td>2026/05/10</td><td>3</td><td class="num">11,876</td><td class="num">0.712</td><td class="num profit-positive">8,456</td><td class="num">44,726</td><td class="num">3.766</td><td class="num">2.24%</td><td class="num">2.87%</td><td class="num">4.51%</td><td class="num">1.72%</td></tr>
+      <tr><td><span class="rank">12</span></td><td><span class="change change-down">▼</span></td><td><div class="machine-name">L虚構推理 ST</div><div class="machine-type">スマスロ ART/AT</div></td><td>2026/04/05</td><td>8</td><td class="num">11,130</td><td class="num">0.554</td><td class="num profit-positive">6,170</td><td class="num">39,123</td><td class="num">3.515</td><td class="num">0.26%</td><td class="num">0.31%</td><td class="num">0.41%</td><td class="num">0.21%</td></tr>
+      <tr><td><span class="rank">13</span></td><td><span class="change change-up">▲</span></td><td><div class="machine-name">S/沖ドキ！BLACK/XA</div><div class="machine-type">30φ ART/AT</div></td><td>2024/12/01</td><td>78</td><td class="num">11,122</td><td class="num">0.534</td><td class="num profit-positive">5,941</td><td class="num">41,894</td><td class="num">3.767</td><td class="num">1.51%</td><td class="num">1.92%</td><td class="num">2.27%</td><td class="num">1.23%</td></tr>
+      <tr><td><span class="rank">14</span></td><td><span class="change change-up">▲</span></td><td><div class="machine-name">Lスマスロ攻殻機動隊 ZS</div><div class="machine-type">スマスロ ART/AT</div></td><td>2026/02/01</td><td>17</td><td class="num">11,046</td><td class="num">0.371</td><td class="num profit-positive">4,103</td><td class="num">36,646</td><td class="num">3.318</td><td class="num">1.03%</td><td class="num">1.16%</td><td class="num">1.08%</td><td class="num">0.85%</td></tr>
+      <tr><td><span class="rank">15</span></td><td><span class="change change-same">→</span></td><td><div class="machine-name">Lアニマルスロットドッチ ZT</div><div class="machine-type">スマスロ ART/AT</div></td><td>2026/04/19</td><td>6</td><td class="num">10,861</td><td class="num">0.741</td><td class="num profit-positive">8,044</td><td class="num">37,931</td><td class="num">3.492</td><td class="num">0.26%</td><td class="num">0.31%</td><td class="num">0.55%</td><td class="num">0.22%</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="legend">
+  <span><span class="leg-new">NEW</span> 初登場</span>
+  <span><span class="leg-up">▲</span> 順位上昇</span>
+  <span><span class="leg-down">▼</span> 順位下降</span>
+  <span><span class="leg-same">→</span> 順位変わらず</span>
+  <span style="color:var(--muted)">順位変動は前週（2026/05/18〜05/24）との比較</span>
+</div>
+</body>
+</html>
